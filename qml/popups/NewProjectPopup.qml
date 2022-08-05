@@ -5,6 +5,8 @@ import "../buttons"
 
 BasePopup {
     Component.onCompleted: open();
+    height: 200
+    width: 350
     contentItem: Item {
         anchors.fill: parent
         FlatButton {

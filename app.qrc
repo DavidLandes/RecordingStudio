@@ -23,5 +23,7 @@
         <file>qml/popups/BasePopup.qml</file>
         <file>qml/popups/NewProjectPopup.qml</file>
         <file>qml/buttons/FlatButton.qml</file>
+        <file>qml/popups/OpenDeleteProjectPopup.qml</file>
+        <file>qml/common/SelectionList.qml</file>
     </qresource>
 </RCC>

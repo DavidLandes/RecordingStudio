@@ -20,7 +20,7 @@ Toolbar {
                     showCreateProject();
                     break;
                 case "Open Project":
-                    projects.open();
+                    showOpenProject();
                     break;
                 }
             }
@@ -41,6 +41,10 @@ Toolbar {
     ]
     function showCreateProject() {
         var c = Qt.createComponent("popups/NewProjectPopup.qml");
+        c.createObject(mainWindow, {});
+    }
+    function showOpenProject() {
+        var c = Qt.createComponent("popups/OpenDeleteProjectPopup.qml");
         c.createObject(mainWindow, {});
     }
 }

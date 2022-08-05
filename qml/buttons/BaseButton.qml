@@ -10,6 +10,7 @@ Rectangle {
     property bool pressed: false
     signal clicked()
     signal released()
+    opacity: enabled ? 1 : .6
     color: "transparent"
     MouseArea {
         id: mouseBase

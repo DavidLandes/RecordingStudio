@@ -4,23 +4,50 @@ ProjectController::ProjectController(QObject *parent) : QObject(parent)
   , m_current(nullptr)
 {
     setCurrent(new Project("testProject"));
+    qDebug() << getProjectNames();
 }
 
-void ProjectController::open()
+void ProjectController::open(QString projectName)
 {
-    QProcess* selectDir = new QProcess();
-    selectDir->start("explorer.exe", { appDir.absolutePath().replace("/", "\\") });
-    selectDir->waitForFinished();
-    QString output = selectDir->readAll();
-    qDebug() << "open project:" << output;
-    delete selectDir;
+    Project* newProject = new Project(projectName);
+    if (m_current != nullptr)
+        delete m_current;
+    setCurrent(newProject);
 }
 
 void ProjectController::create(QString projectName)
 {
     Project* newProject = new Project(projectName);
-    delete m_current;
+    if (m_current != nullptr)
+        delete m_current;
     setCurrent(newProject);
+}
+
+void ProjectController::erase(QString projectName)
+{
+    // TODO: deleting causes crash.. take a look at this..
+    // TODO: show in qml - "Open a project" in workspace when current is nullptr
+    for (QString project : getProjectNames())
+    {
+        if (project == projectName)
+        {
+            // If this is the current project, delete the project object.
+            if (project == m_current->name())
+            {
+                delete m_current;
+                setCurrent(nullptr);
+            }
+            // Delete the project directory.
+            QDir(appDir.absolutePath() + "/" + project).removeRecursively();
+            break;
+        }
+    }
+}
+
+QStringList ProjectController::getProjectNames()
+{
+    QStringList projectDirs = appDir.entryList(QDir::Filter::Dirs | QDir::Filter::NoDot | QDir::Filter::NoDotDot);
+    return projectDirs;
 }
 
 Project *ProjectController::current() const
