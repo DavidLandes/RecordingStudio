@@ -1,8 +1,10 @@
 import QtQuick 2.0
 import com.studio.Theme 1.0
 import "common"
+import "popups"
 
 Toolbar {
+    id: projectToolbarBase
     width: parent.width
     height: 40
     toolbarMenus: [
@@ -15,7 +17,7 @@ Toolbar {
             onSubmenuClicked: {
                 switch(submenu) {
                 case "New Project":
-                    projects.create();
+                    showCreateProject();
                     break;
                 case "Open Project":
                     projects.open();
@@ -37,4 +39,8 @@ Toolbar {
             }
         }
     ]
+    function showCreateProject() {
+        var c = Qt.createComponent("popups/NewProjectPopup.qml");
+        c.createObject(mainWindow, {});
+    }
 }

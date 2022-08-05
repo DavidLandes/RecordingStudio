@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.0
 import com.studio.Theme 1.0
 import "common"
 import "buttons"
+import "popups"
 
 Item {
     Header {

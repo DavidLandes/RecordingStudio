@@ -4,12 +4,13 @@ import com.studio.Theme 1.0
 Rectangle {
     id: baseBtn
     property Theme colorTheme: colors.appTheme
+    property string splashColor: colors.get(Palette.Grey_40)
     property bool splashEnabled: false
     property bool enabled: true
     property bool pressed: false
     signal clicked()
     signal released()
-
+    color: "transparent"
     MouseArea {
         id: mouseBase
         anchors.fill: parent
@@ -24,7 +25,7 @@ Rectangle {
         opacity: baseBtn.pressed ? .3 : 0
         anchors.fill: parent
         radius: parent.radius
-        color: colors.get(colorTheme.foreground)
+        color: baseBtn.splashColor
         Behavior on opacity {
             NumberAnimation {
                 duration: !pressed ? 50 : 400

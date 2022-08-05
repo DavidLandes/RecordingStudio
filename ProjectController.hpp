@@ -15,7 +15,7 @@ public:
     explicit ProjectController(QObject *parent = nullptr);
 
     Q_INVOKABLE void open();
-    Q_INVOKABLE void create();
+    Q_INVOKABLE void create(QString projectName);
 
 
     Project* current() const;

@@ -12,13 +12,15 @@ void ProjectController::open()
     selectDir->start("explorer.exe", { appDir.absolutePath().replace("/", "\\") });
     selectDir->waitForFinished();
     QString output = selectDir->readAll();
-    qDebug() << "open directory:" << output;
+    qDebug() << "open project:" << output;
     delete selectDir;
 }
 
-void ProjectController::create()
+void ProjectController::create(QString projectName)
 {
-
+    Project* newProject = new Project(projectName);
+    delete m_current;
+    setCurrent(newProject);
 }
 
 Project *ProjectController::current() const

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/buttons/ButtonBase.qml</file>
+        <file>qml/buttons/BaseButton.qml</file>
         <file>qml/buttons/IconButton.qml</file>
         <file>qml/buttons/ShadedIconButton.qml</file>
         <file>qml/common/CardBase.qml</file>
@@ -20,5 +20,8 @@
         <file>qml/ProjectToolbar.qml</file>
         <file>qml/TrackList.qml</file>
         <file>qml/text/LargerText.qml</file>
+        <file>qml/popups/BasePopup.qml</file>
+        <file>qml/popups/NewProjectPopup.qml</file>
+        <file>qml/buttons/FlatButton.qml</file>
     </qresource>
 </RCC>
