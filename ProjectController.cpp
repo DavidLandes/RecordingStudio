@@ -25,14 +25,13 @@ void ProjectController::create(QString projectName)
 
 void ProjectController::erase(QString projectName)
 {
-    // TODO: deleting causes crash.. take a look at this..
     // TODO: show in qml - "Open a project" in workspace when current is nullptr
     for (QString project : getProjectNames())
     {
         if (project == projectName)
         {
             // If this is the current project, delete the project object.
-            if (project == m_current->name())
+            if (m_current != nullptr && project == m_current->name())
             {
                 delete m_current;
                 setCurrent(nullptr);

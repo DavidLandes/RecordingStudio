@@ -14,6 +14,7 @@ BasePopup {
         SelectionList {
             id: selector
             property var projectNames: projects.getProjectNames()
+            color: colors.get(Palette.Grey_22)
             width: parent.width * .9
             anchors {
                 top: parent.top
@@ -35,11 +36,14 @@ BasePopup {
                 id: deleteBtn
                 text: "Delete"
                 enabled: !!selector.selectedOption
-                color: colors.get(Palette.Mahogany)
+                color: colors.get(Palette.Grey_30)
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
-                    projects.erase(selector.selectedOption);
-                    selector.projectNames = projects.getProjectNames();
+                    if (selector.selectedOption) {
+                        projects.erase(selector.selectedOption);
+                        selector.selectedOption = "";
+                        selector.projectNames = projects.getProjectNames();
+                    }
                 }
             }
             FlatButton {

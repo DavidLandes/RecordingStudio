@@ -8,12 +8,9 @@ Rectangle {
     property var options: []
     property var selectedOption
     property string selectedColor: colors.get(Palette.Grey_25)
-    property string borderColor: colors.get(Palette.Grey_15)
-    color: "transparent"
+    color: colors.get(Palette.Grey_15)
     width: 200
     height: 400
-    border.color: borderColor
-    border.width: 2
     radius: 8
     ListView {
         anchors {

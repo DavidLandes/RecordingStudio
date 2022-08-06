@@ -8,11 +8,11 @@ import "../text"
 
 Item {
     id: toolbarBase
-    property string backgroundColor: colors.get(Palette.Grey_30)
-    property string selectedItemColor: colors.get(Palette.Grey_25)
+    property string backgroundColor: colors.get(Palette.Grey_25)
+    property string selectedItemColor: colors.get(Palette.Grey_22)
     property string selectedSubmenuItemColor: colors.get(Palette.Grey_20)
-    property string textColor: colors.get(Palette.Grey_90)
-    property string selectedTextColor: colors.get(Palette.Grey_80)
+    property string textColor: colors.get(Palette.Grey_80)
+    property string selectedTextColor: colors.get(Palette.Grey_90)
     property alias toolbarMenus: menuBar.menus
     width: parent.width
     height: 40

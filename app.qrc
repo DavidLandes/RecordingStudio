@@ -25,5 +25,6 @@
         <file>qml/buttons/FlatButton.qml</file>
         <file>qml/popups/OpenDeleteProjectPopup.qml</file>
         <file>qml/common/SelectionList.qml</file>
+        <file>qml/common/Input.qml</file>
     </qresource>
 </RCC>
