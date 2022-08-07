@@ -8,7 +8,7 @@ import "popups"
 Item {
     Header {
         id: header
-        title: "Recording Studio"
+        title:  projects.current ? projects.current.name : "Recording Studio"
     }
     ProjectToolbar {
         id: tools
