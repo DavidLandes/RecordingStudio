@@ -112,8 +112,8 @@ void Track::resetMediaPlayer(QString audioSource)
     m_media->setMedia(QUrl::fromLocalFile(audioSource));
 
     // Listen for the media player changes.
-    connect(m_media, &QMediaPlayer::durationChanged, this, [=]() { setDuration(m_media->duration()); qDebug() << m_media->duration(); });
-    connect(m_media, &QMediaPlayer::positionChanged, this, [=]() { setElapsed(m_media->position()); qDebug() << m_media->position(); });
+    connect(m_media, &QMediaPlayer::durationChanged, this, [=]() { setDuration(m_media->duration()); });
+    connect(m_media, &QMediaPlayer::positionChanged, this, [=]() { setElapsed(m_media->position()); });
     connect(m_media, &QMediaPlayer::stateChanged, this, [=]()
     {
         setIsPlaying(m_media->state() == QMediaPlayer::State::PlayingState);
