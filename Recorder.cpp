@@ -82,16 +82,21 @@ Recorder::State Recorder::state() const
     return m_state;
 }
 
+bool Recorder::isRecording() const
+{
+    return m_state == Recorder::State::Recording;
+}
+
 Recorder::State Recorder::convertState(QMediaRecorder::State state)
 {
     switch(state)
     {
-    case QAudioRecorder::State::StoppedState:
+    case QMediaRecorder::State::StoppedState:
         return Recorder::State::Stopped;
-    case QAudioRecorder::State::RecordingState:
-        return Recorder::State::Stopped;
-    case QAudioRecorder::State::PausedState:
-        return Recorder::State::Stopped;
+    case QMediaRecorder::State::RecordingState:
+        return Recorder::State::Recording;
+    case QMediaRecorder::State::PausedState:
+        return Recorder::State::Paused;
     default:
         return Recorder::State::Stopped;
     }

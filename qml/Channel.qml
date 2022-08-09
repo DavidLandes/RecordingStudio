@@ -7,9 +7,9 @@ import "common"
 CardBase {
     id: channelBase
     property Track track
-    readonly property bool isPlayingAudio: track && track.isPlaying
-    readonly property var duration: track && track.duration
-    readonly property var elapsed: track && track.elapsed
+    readonly property bool isPlayingAudio: track ? track.isPlaying : false
+    readonly property var duration: track ? track.duration : 0
+    readonly property var elapsed: track ? track.elapsed : 0
     signal deleteClicked()
 
     width: parent.width

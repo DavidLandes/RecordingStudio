@@ -13,6 +13,7 @@ public:
     Q_PROPERTY(QStringList devices READ devices WRITE setDevices NOTIFY devicesChanged)
     Q_PROPERTY(QString selectedDevice READ selectedDevice WRITE setSelectedDevice NOTIFY selectedDeviceChanged)
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
+    Q_PROPERTY(bool isRecording READ isRecording NOTIFY stateChanged)
 
     explicit Recorder(QObject *parent = nullptr);
     ~Recorder();
@@ -33,7 +34,8 @@ public:
     void setDevices(QStringList devices);
     QString selectedDevice() const;
     void setSelectedDevice(QString selectedDevice);
-    State state() const;
+    State state() const;    
+    bool isRecording() const;
 
 signals:
     void devicesChanged(QStringList devices);
