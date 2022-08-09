@@ -4,7 +4,7 @@ import com.studio.Theme 1.0
 import "buttons"
 
 Rectangle {
-    color: colors.get(Palette.Grey_10)
+    color: colors.get(Palette.Grey_11)
     ListView {
         model: projects.current.tracks
         spacing: 10

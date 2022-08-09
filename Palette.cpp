@@ -9,6 +9,10 @@ Palette::Palette(QObject *parent) : QObject(parent)
     m_colors[Color::Red_100]    = "#ff0000";
     m_colors[Color::Black]      = "#000000";
     m_colors[Color::Grey_10]    = "#1a1a1a";
+    m_colors[Color::Grey_11]    = "#1c1c1c";
+    m_colors[Color::Grey_12]    = "#1f1f1f";
+    m_colors[Color::Grey_13]    = "#212121";
+    m_colors[Color::Grey_14]    = "#242424";
     m_colors[Color::Grey_15]    = "#262626";
     m_colors[Color::Grey_16]    = "#292929";
     m_colors[Color::Grey_17]    = "#2b2b2b";
