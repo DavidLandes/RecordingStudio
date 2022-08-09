@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import com.studio.Theme 1.0
 import "../text"
 
 BaseButton {
@@ -8,6 +9,7 @@ BaseButton {
     width: 96
     radius: 8
     splashEnabled: true
+    color: colors.get(Palette.Mahogany)
     MediumText {
         text: flatBtnBase.text
         height: implicitHeight

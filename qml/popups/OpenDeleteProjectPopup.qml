@@ -6,7 +6,6 @@ import "../buttons"
 import "../common"
 
 BasePopup {
-    Component.onCompleted: open();
     height: 350
     width: 350
     contentItem: Item {

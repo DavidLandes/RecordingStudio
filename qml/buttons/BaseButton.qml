@@ -23,7 +23,7 @@ Rectangle {
     Rectangle {
         id: splash
         visible: baseBtn.splashEnabled
-        opacity: baseBtn.pressed ? .3 : 0
+        opacity: baseBtn.pressed ? .5 : 0
         anchors.fill: parent
         radius: parent.radius
         color: baseBtn.splashColor

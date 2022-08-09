@@ -29,11 +29,15 @@ Toolbar {
             title: "Edit"
             menuItems: [
                 { "title": "New Track" },
+                { "title": "Preferences" },
             ]
             onSubmenuClicked: {
                 switch(submenu) {
                 case "New Track":
                     projects.current.createTrack();
+                    break;
+                case "Preferences":
+                    showPreferencesMenu();
                     break;
                 }
             }
@@ -62,6 +66,11 @@ Toolbar {
     }
     function showOpenProject() {
         var c = Qt.createComponent("popups/OpenDeleteProjectPopup.qml");
+        c.createObject(mainWindow, {});
+    }
+    function showPreferencesMenu() {
+        console.log("preferences")
+        var c = Qt.createComponent("popups/PreferencesPopup.qml");
         c.createObject(mainWindow, {});
     }
 }

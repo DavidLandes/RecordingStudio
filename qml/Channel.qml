@@ -19,12 +19,12 @@ CardBase {
 
     Item {
         id: btnColumn
-        width: 64
+        width: 72
         height: parent.height
         Column {
             spacing: 8
             anchors {
-                fill: parent
+                centerIn: parent
                 margins: 10
             }
             ShadedIconButton {

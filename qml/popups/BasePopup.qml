@@ -4,6 +4,7 @@ import com.studio.Theme 1.0
 
 Popup {
     id: basePopupItem
+    Component.onCompleted: open();
     property string backgroundColor: colors.get(Palette.Grey_20)
     property int radius: 16
     height: 200

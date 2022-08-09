@@ -27,5 +27,7 @@
         <file>qml/common/SelectionList.qml</file>
         <file>qml/common/Input.qml</file>
         <file>qml/common/Progress.qml</file>
+        <file>qml/common/TabMenu.qml</file>
+        <file>qml/popups/PreferencesPopup.qml</file>
     </qresource>
 </RCC>
