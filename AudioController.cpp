@@ -1,7 +1,7 @@
 #include "AudioController.hpp"
 
 AudioController::AudioController(QObject *parent) : QObject(parent)
-  , m_currentProject(new Project("testProject"))
+  , m_currentProject(nullptr)
 {
     m_recorder = new Recorder();
     m_recorder->refreshDevices();

@@ -25,6 +25,9 @@ public:
     Q_INVOKABLE void deleteTrack(int index, bool deleteAudio=true);
     void deleteAllTracks(bool deleteAudio=true);
 
+    Q_INVOKABLE void playAll();
+    Q_INVOKABLE void stopAll();
+
     QString name() const;
     QList<Track*> tracks() const;
 

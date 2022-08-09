@@ -25,27 +25,18 @@ void Project::initProject()
      *      |___myproject1/
      *      |___anotherproject2/
      *          |___audio/
-     *              |___track_1.mp3
-     *              |___track_2.mp3
-     *              |___track_3.mp3
-     *              |___track_4.mp3
+     *              |___track_1.wav
+     *              |___track_2.wav
+     *              |___track_3.wav
+     *              |___track_4.wav
     */
-    m_projectDir = QDir(appDir.absoluteFilePath(m_name));
-    m_audioDir = QDir(m_projectDir.absoluteFilePath("audio"));
+    m_projectDir = QDir(appDir.absolutePath() + "/" + m_name);
+    m_audioDir = QDir(m_projectDir.absolutePath() + "/audio");
 
     // Make sure the appropriate directories exists.
-    if (!appDir.exists())
-    {
-        qDebug() << "Creating app directory -" << (appDir.mkdir(appDir.absolutePath()) ? "success" : "failed");
-    }
-    if (!m_projectDir.exists())
-    {
-        qDebug() << "Creating project directory -" << (m_projectDir.mkdir(m_projectDir.absolutePath()) ? "success" : "failed");
-    }
-    if (!m_audioDir.exists())
-    {
-        qDebug() << "Creating audio directory -" << (m_audioDir.mkdir(m_audioDir.absolutePath()) ? "success" : "failed");
-    }
+    qDebug() << "Creating app directory -" << (appDir.mkdir(appDir.absolutePath()) || appDir.exists() ? "success" : "failed") << appDir.absolutePath();
+    qDebug() << "Creating project directory -" << (m_projectDir.mkdir(m_projectDir.absolutePath()) || m_projectDir.exists() ? "success" : "failed") << m_projectDir.absolutePath();
+    qDebug() << "Creating audio directory -" << (m_audioDir.mkdir(m_audioDir.absolutePath()) || m_audioDir.exists() ? "success" : "failed") << m_audioDir.absolutePath();
 
     // Watch for external file changes & reload them.
     connect(&m_fileWatcher, &QFileSystemWatcher::fileChanged, this, &Project::onAudioFileChanged);
@@ -113,6 +104,22 @@ void Project::deleteAllTracks(bool deleteAudio)
     for (int i = m_tracks.length() - 1; i >= 0; i--)
     {
         deleteTrack(i, deleteAudio);
+    }
+}
+
+void Project::playAll()
+{
+    for (Track* track : m_tracks)
+    {
+        track->play();
+    }
+}
+
+void Project::stopAll()
+{
+    for (Track* track : m_tracks)
+    {
+        track->stop();
     }
 }
 

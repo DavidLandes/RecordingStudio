@@ -48,6 +48,7 @@ public:
         Grey_85,
         Grey_90,
         Grey_95,
+        Green_70,
         White,
     };
     Q_ENUM(Color)

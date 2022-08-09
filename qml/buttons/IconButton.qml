@@ -11,7 +11,7 @@ BaseButton {
         "plus": "+",
         "refresh": "⟲",
         "play": "⏵︎",
-        "pause": "⏸",
+        "pause": "⏸︎",
         "stop": "⯀",
         "record": "●",
         "kabob": "⋮",
@@ -24,8 +24,8 @@ BaseButton {
 
     LargeText {
         text: icons[iconCode]
-        height: parent.height
-        width: parent.width
+        height: implicitHeight
+        width: implicitWidth
         color: iconColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

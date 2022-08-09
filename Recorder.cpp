@@ -22,19 +22,20 @@ void Recorder::refreshDevices()
     {
         setSelectedDevice(m_devices.first());
     }
-    for (QString dev : m_devices)
-    {
-        qDebug() << dev << m_recorder->audioInputDescription(dev);
-    }
+    qDebug() << m_devices;
 }
 
 void Recorder::start(QString outputPath)
 {
-    if (m_selectedDevice != "")
+    if (m_selectedDevice != "" && QFile::exists(outputPath))
     {
         m_recorder->setOutputLocation(QUrl::fromLocalFile(outputPath));
         m_recorder->record();
         qDebug() << "Recording Start:" << m_recorder->errorString();
+    }
+    else
+    {
+        qDebug() << "Cannot start recording for file:" << outputPath;
     }
 }
 

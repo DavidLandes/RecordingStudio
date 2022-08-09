@@ -37,6 +37,23 @@ Toolbar {
                     break;
                 }
             }
+        },
+        ToolbarMenu {
+            title: "Audio"
+            menuItems: [
+                { "title": "Play All" },
+                { "title": "Stop All" },
+            ]
+            onSubmenuClicked: {
+                switch(submenu) {
+                case "Play All":
+                    projects.current.playAll();
+                    break;
+                case "Stop All":
+                    projects.current.stopAll();
+                    break;
+                }
+            }
         }
     ]
     function showCreateProject() {

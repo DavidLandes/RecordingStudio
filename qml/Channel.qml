@@ -7,6 +7,9 @@ import "common"
 CardBase {
     id: channelBase
     property Track track
+    readonly property bool isPlayingAudio: track && track.isPlaying
+    readonly property var duration: track && track.duration
+    readonly property var elapsed: track && track.elapsed
     signal deleteClicked()
 
     width: parent.width
@@ -33,6 +36,7 @@ CardBase {
                 property bool isSelected: false
                 iconColor: colors.get(Palette.Red_80)
                 iconCode: !isSelected ? "record" : "stop"
+                enabled: !isPlayingAudio
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     isSelected = !isSelected;
@@ -41,6 +45,19 @@ CardBase {
                     }
                     else {
                         audio.recorder.stop();
+                    }
+                }
+            }
+            ShadedIconButton {
+                iconColor: colors.get(Palette.Green_70)
+                iconCode: !isPlayingAudio ? "play" : "stop"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    if (!isPlayingAudio) {
+                        track.play();
+                    }
+                    else {
+                        track.stop();
                     }
                 }
             }
@@ -55,6 +72,8 @@ CardBase {
             rightMargin: channelBase.radius
         }
         AudioGraph {
+            id: graph
+            track: channelBase.track
             height: parent.height * .9
             anchors {
                 left: parent.left

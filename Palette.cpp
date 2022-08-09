@@ -34,6 +34,7 @@ Palette::Palette(QObject *parent) : QObject(parent)
     m_colors[Color::Grey_85]    = "#d9d9d9";
     m_colors[Color::Grey_90]    = "#e6e6e6";
     m_colors[Color::Grey_95]    = "#f2f2f2";
+    m_colors[Color::Green_70]   = "#00830f";
     m_colors[Color::White]      = "#ffffff";
 }
 

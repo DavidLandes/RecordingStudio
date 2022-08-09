@@ -26,5 +26,6 @@
         <file>qml/popups/OpenDeleteProjectPopup.qml</file>
         <file>qml/common/SelectionList.qml</file>
         <file>qml/common/Input.qml</file>
+        <file>qml/common/Progress.qml</file>
     </qresource>
 </RCC>
