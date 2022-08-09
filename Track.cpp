@@ -3,20 +3,27 @@
 Track::Track(QString filePath, QObject *parent) : QObject(parent)
   , m_filePath(filePath)
   , m_offsetMs(0)
+  , m_media(nullptr)
   , m_isPlaying(false)
   , m_duration(0)
   , m_elapsed(0)
-  , m_media(nullptr)
 {
     m_audioOutput = new QAudioOutput();
 }
 
-void Track::play()
+void Track::play(int delayMillis)
 {
     if (QFile::exists(m_filePath))
     {
         resetMediaPlayer(m_filePath);
-        m_media->play();
+        setIsPlaying(true);
+
+        // Delay audio playback.
+        QTimer::singleShot(delayMillis, this, [=]() {
+            m_media->play();
+            // Update isPlaying after we try to start the media player. This keeps state in sync if there's an error.
+            setIsPlaying(m_media->state() == QMediaPlayer::State::PlayingState);
+        });
     }
 }
 
