@@ -25,11 +25,13 @@ Rectangle {
         }
         Column {
             spacing: 10
+            width: parent.width
             anchors.centerIn: parent
             Repeater {
                 model: menuTitles
                 FlatButton {
                     text: modelData
+                    width: parent.width * .9
                     color: index == tabMenu.selectedIndex ? tabMenu.selectedButtonColor : tabMenu.buttonColor
                     onClicked: tabMenu.selectedIndex = index;
                 }
