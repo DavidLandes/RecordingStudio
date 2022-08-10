@@ -111,7 +111,7 @@ void Project::playAll()
 {
     for (Track* track : m_tracks)
     {
-        track->play();
+        track->play(settings.value(QString(RECORDING_CONF) + "startDelay", 0).toInt());
     }
 }
 

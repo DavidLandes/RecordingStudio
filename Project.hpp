@@ -6,6 +6,7 @@
 #include <QFileSystemWatcher>
 #include <QObject>
 #include <QTime>
+#include "Globals.hpp"
 #include "Track.hpp"
 
 class Project : public QObject

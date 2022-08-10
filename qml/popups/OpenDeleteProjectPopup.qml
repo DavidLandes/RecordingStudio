@@ -49,7 +49,7 @@ BasePopup {
                 id: openBtn
                 text: "Open"
                 enabled: !!selector.selectedOption
-                color: colors.get(Palette.Mahogany)
+                color: colors.get(Palette.Seafoam)
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     projects.open(selector.selectedOption);

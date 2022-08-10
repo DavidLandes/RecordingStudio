@@ -9,7 +9,7 @@ BaseButton {
     width: 96
     radius: 8
     splashEnabled: true
-    color: colors.get(Palette.Mahogany)
+    color: colors.get(Palette.Seafoam)
     MediumText {
         text: flatBtnBase.text
         height: implicitHeight

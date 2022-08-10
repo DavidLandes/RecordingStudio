@@ -11,7 +11,7 @@ Track::Track(QString filePath, QObject *parent) : QObject(parent)
     m_audioOutput = new QAudioOutput();
 }
 
-void Track::play(int delayMillis)
+void Track::play(int delaySec)
 {
     if (QFile::exists(m_filePath))
     {
@@ -19,7 +19,7 @@ void Track::play(int delayMillis)
         setIsPlaying(true);
 
         // Delay audio playback.
-        QTimer::singleShot(delayMillis, this, [=]() {
+        QTimer::singleShot(delaySec * 1000, this, [=]() {
             m_media->play();
             // Update isPlaying after we try to start the media player. This keeps state in sync if there's an error.
             setIsPlaying(m_media->state() == QMediaPlayer::State::PlayingState);

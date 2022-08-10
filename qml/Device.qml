@@ -8,7 +8,7 @@ CardBase {
     property string name: ""
     property bool isSelected: false
 
-    color: isSelected ? colors.get(Palette.Mahogany) : colors.get(Palette.Grey_20)
+    color: isSelected ? colors.get(Palette.Seafoam) : colors.get(Palette.Grey_20)
     Column {
         anchors {
             fill: parent

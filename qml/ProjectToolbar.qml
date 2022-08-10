@@ -69,7 +69,6 @@ Toolbar {
         c.createObject(mainWindow, {});
     }
     function showPreferencesMenu() {
-        console.log("preferences")
         var c = Qt.createComponent("popups/PreferencesPopup.qml");
         c.createObject(mainWindow, {});
     }

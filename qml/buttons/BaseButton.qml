@@ -3,7 +3,6 @@ import com.studio.Theme 1.0
 
 Rectangle {
     id: baseBtn
-    property Theme colorTheme: colors.appTheme
     property string splashColor: colors.get(Palette.Grey_40)
     property bool splashEnabled: false
     property bool enabled: true

@@ -15,6 +15,7 @@ public:
     enum class Color
     {
         Mahogany,
+        Seafoam,
         Red_80,
         Red_100,
         Black,

@@ -8,6 +8,8 @@ Rectangle {
     property list<Component> menuComponents
     property int selectedIndex: 0
     property string dividorColor: colors.get(Palette.Grey_30)
+    property string selectedButtonColor: colors.get(Palette.Seafoam)
+    property string buttonColor: colors.get(Palette.Grey_30)
     color: colors.get(Palette.Grey_22)
     width: 500
     height: 400
@@ -28,7 +30,8 @@ Rectangle {
                 model: menuTitles
                 FlatButton {
                     text: modelData
-                    onClicked: selectedIndex = index;
+                    color: index == tabMenu.selectedIndex ? tabMenu.selectedButtonColor : tabMenu.buttonColor
+                    onClicked: tabMenu.selectedIndex = index;
                 }
             }
         }
@@ -37,7 +40,7 @@ Rectangle {
         id: separator
         width: 2
         height: parent.height * .8
-        color: dividorColor
+        color: tabMenu.dividorColor
         radius: width / 2
         anchors {
             left: menus.right
@@ -51,11 +54,11 @@ Rectangle {
             left: separator.right
             right: parent.right
             bottom: parent.bottom
-            margins: 20
+            margins: 48
         }
         Loader {
             anchors.fill: parent
-            sourceComponent: menuComponents[selectedIndex]
+            sourceComponent: tabMenu.menuComponents[tabMenu.selectedIndex]
         }
     }
 }

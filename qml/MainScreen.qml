@@ -14,20 +14,21 @@ Item {
         id: tools
         anchors.top: header.bottom
     }
-    MicrophoneList {
-        id: mics
-        width: 300
-        anchors {
-            left: parent.left
-            top: tools.bottom
-            bottom: parent.bottom
-        }
-    }
+//    MicrophoneList {
+//        id: mics
+//        width: 300
+//        anchors {
+//            left: parent.left
+//            top: tools.bottom
+//            bottom: parent.bottom
+//        }
+//    }
     Item {
         id: editorPane
         anchors {
             top: tools.bottom
-            left: mics.right
+//            left: mics.right
+            left: parent.left
             right: parent.right
             bottom: parent.bottom
         }

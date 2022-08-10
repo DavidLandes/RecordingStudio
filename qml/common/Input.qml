@@ -5,7 +5,7 @@ import "../text"
 import "../buttons"
 
 Rectangle {
-    property string accentColor: colors.get(Palette.Mahogany)
+    property string accentColor: colors.get(Palette.Seafoam)
     property string underlineColor: colors.get(Palette.Grey_40)
     property bool hasFocus: true
     readonly property string text: edit.text

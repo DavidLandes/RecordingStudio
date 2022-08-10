@@ -18,7 +18,7 @@ public:
     Q_PROPERTY(quint64 elapsed READ elapsed WRITE setElapsed NOTIFY elapsedChanged)
     explicit Track(QString filePath, QObject *parent = nullptr);
 
-    Q_INVOKABLE void play(int delayMillis=0);
+    Q_INVOKABLE void play(int delaySec=0);
     Q_INVOKABLE void pause();
     Q_INVOKABLE void stop();
 

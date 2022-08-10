@@ -5,6 +5,7 @@ Palette::Palette(QObject *parent) : QObject(parent)
     m_appTheme = new Theme((int)Color::Grey_20, (int)Color::Grey_40, (int)Color::Mahogany);
 
     m_colors[Color::Mahogany]   = "#c04000";
+    m_colors[Color::Seafoam]    = "#0f9171";
     m_colors[Color::Red_80]     = "#cc0000";
     m_colors[Color::Red_100]    = "#ff0000";
     m_colors[Color::Black]      = "#000000";

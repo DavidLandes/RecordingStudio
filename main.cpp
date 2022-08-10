@@ -1,5 +1,6 @@
 
 #include <QQmlContext>
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "AudioController.hpp"
@@ -16,6 +17,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+    qDebug() << "Starting Recording Studio -" << VERSION;
 
     // Initialize.
     Palette* colors = new Palette();

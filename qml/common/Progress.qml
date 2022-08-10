@@ -8,7 +8,7 @@ Item {
     property var value: .5
     property int radius: 0
     property string background: colors.get(Palette.Grey_20)
-    property string foreground: colors.get(Palette.Mahogany)
+    property string foreground: colors.get(Palette.Seafoam)
     Rectangle {
         id: back
         height: parent.height

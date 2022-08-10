@@ -13,6 +13,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+#VERSION = $$system(git describe --always --tags --dirty --match 'v[0-9]*.[0-9]*')
+isEmpty(VERSION) {
+    VERSION = "1.0.0" # set a default, if git doesn't know the version number
+}
+DEFINES += VERSION=\\\"$$VERSION\\\"
+
+
 SOURCES += $$files(*.cpp)
 HEADERS += $$files(*.hpp)
 

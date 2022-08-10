@@ -8,7 +8,8 @@ Rectangle {
     property var options: []
     property var selectedOption
     property string selectedColor: colors.get(Palette.Grey_25)
-    color: colors.get(Palette.Grey_15)
+    property int itemHeight: 50
+    color: colors.get(Palette.Grey_18)
     width: 200
     height: 400
     radius: 8
@@ -21,9 +22,10 @@ Rectangle {
         clip: true
         delegate: Rectangle {
             radius: listBase.radius
-            height: 50
+            height: listBase.itemHeight
             width: parent.width
-            color: selectedOption == modelData ? selectedColor : "transparent"
+            opacity: listItemMouse.containsMouse ? .6 : 1
+            color: selectedOption == modelData || listItemMouse.containsMouse ? selectedColor : "transparent"
             MediumText {
                 text: modelData
                 anchors.centerIn: parent
@@ -31,6 +33,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
             MouseArea {
+                id: listItemMouse
+                hoverEnabled: true
                 anchors.fill: parent
                 onClicked: selectedOption = modelData;
             }

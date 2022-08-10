@@ -24,7 +24,7 @@ BasePopup {
         FlatButton {
             id: button
             text: "Create"
-            color: colors.get(Palette.Mahogany)
+            color: colors.get(Palette.Seafoam)
             enabled: input.text.trim() != ""
             anchors {
                 horizontalCenter: parent.horizontalCenter
