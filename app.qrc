@@ -34,5 +34,6 @@
         <file>qml/ProjectToolbar.qml</file>
         <file>qml/TrackList.qml</file>
         <file>qml/preferenceMenus/KeyboardShortcutPreferences.qml</file>
+        <file>qml/preferenceMenus/PlaybackPreferences.qml</file>
     </qresource>
 </RCC>

@@ -1,4 +1,4 @@
-QT += qml quick multimedia concurrent widgets
+QT += qml quick multimedia concurrent widgets gui
 
 CONFIG += c++11
 

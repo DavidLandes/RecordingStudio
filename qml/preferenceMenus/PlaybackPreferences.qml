@@ -4,7 +4,7 @@ import "../text"
 Item {
     anchors.fill: parent
     LargeText {
-        text: "Shortcuts coming Soon!"
+        text: "Playback coming Soon!"
         anchors.centerIn: parent
     }
 }

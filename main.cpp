@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "Application.hpp"
 #include "AudioController.hpp"
 #include "Palette.hpp"
 #include "Player.hpp"
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     qDebug() << "Starting Recording Studio -" << VERSION;
 
     // Initialize.
+    Application* application = new Application();
     Palette* colors = new Palette();
     AudioController* audio = new AudioController();
     ProjectController* projects = new ProjectController();
@@ -34,6 +36,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     // Register properties.
+    engine.rootContext()->setContextProperty("application", application);
     engine.rootContext()->setContextProperty("colors", colors);
     engine.rootContext()->setContextProperty("audio", audio);
     engine.rootContext()->setContextProperty("projects", projects);

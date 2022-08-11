@@ -4,8 +4,7 @@ import "../buttons"
 
 Rectangle {
     id: tabMenu
-    property var menuTitles: []
-    property list<Component> menuComponents
+    property var menus: []
     property int selectedIndex: 0
     property string dividorColor: colors.get(Palette.Grey_30)
     property string selectedButtonColor: colors.get(Palette.Seafoam)
@@ -15,7 +14,7 @@ Rectangle {
     height: 400
     radius: 8
     Item {
-        id: menus
+        id: menuItem
         width: 150
         anchors {
             top: parent.top
@@ -28,9 +27,9 @@ Rectangle {
             width: parent.width
             anchors.centerIn: parent
             Repeater {
-                model: menuTitles
+                model: menus
                 FlatButton {
-                    text: modelData
+                    text: modelData.title
                     width: parent.width * .9
                     color: index == tabMenu.selectedIndex ? tabMenu.selectedButtonColor : tabMenu.buttonColor
                     onClicked: tabMenu.selectedIndex = index;
@@ -45,7 +44,7 @@ Rectangle {
         color: tabMenu.dividorColor
         radius: width / 2
         anchors {
-            left: menus.right
+            left: menuItem.right
             verticalCenter: parent.verticalCenter
         }
     }
@@ -60,7 +59,7 @@ Rectangle {
         }
         Loader {
             anchors.fill: parent
-            sourceComponent: tabMenu.menuComponents[tabMenu.selectedIndex]
+            sourceComponent: tabMenu.menus[tabMenu.selectedIndex].component
         }
     }
 }

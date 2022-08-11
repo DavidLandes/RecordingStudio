@@ -6,9 +6,21 @@ import "preferenceMenus"
 TabMenu {
     id: preferencesMenu
     color: "transparent"
-    menuTitles: ["Recording", "Shortcuts"]
-    menuComponents: [
-        Component { RecordingPreferences {} },
-        Component { KeyboardShortcutPreferences {} }
+    menus: [
+        { "title": "Recording", "component": recordingPreferences } ,
+        { "title": "Playback", "component": playbackPreferences },
+        { "title": "Shortcuts", "component": shortcutsPreferences },
     ]
+    Component {
+        id: recordingPreferences
+        RecordingPreferences {}
+    }
+    Component {
+        id: playbackPreferences
+        PlaybackPreferences {}
+    }
+    Component {
+        id: shortcutsPreferences
+        KeyboardShortcutPreferences {}
+    }
 }
