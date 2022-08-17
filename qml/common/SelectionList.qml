@@ -10,6 +10,7 @@ Rectangle {
     property string selectedColor: colors.get(Palette.Grey_30)
     property string hoverColor: colors.get(Palette.Grey_25)
     property int itemHeight: 50
+    property bool forceSelection: true
     color: colors.get(Palette.Grey_18)
     width: 200
     height: 400
@@ -37,7 +38,7 @@ Rectangle {
                 hoverEnabled: true
                 anchors.fill: parent
                 onClicked: {
-                    if (selectedOption === modelData) {
+                    if (!forceSelection && selectedOption === modelData) {
                         selectedOption = null;
                     }
                     else {

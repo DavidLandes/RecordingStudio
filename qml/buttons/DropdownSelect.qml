@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.15
 import com.studio.Theme 1.0
 import "../text"
 import "../common"
@@ -8,12 +9,13 @@ BaseButton {
     property var options: []
     property var selectedOption: options.length > 0 ? options[0] : undefined
     property string suffix: ""
-    property alias isOpen: selector.isOpen
+    property alias forceSelection: selectorList.forceSelection
     height: 40
     width: 88
     radius: 8
     splashEnabled: true
     color: colors.get(Palette.Grey_25)
+    onClicked: selector.visible = !selector.visible;
     MediumText {
         text: (dropBase.selectedOption ?? "") + (dropBase.selectedOption !== undefined ? " " : "") + dropBase.suffix
         verticalAlignment: Text.AlignVCenter
@@ -35,22 +37,24 @@ BaseButton {
             verticalCenter: parent.verticalCenter
         }
     }
-    SelectionList {
+    Popup {
         id: selector
-        property int drawerHeight: (dropBase.options.length * selector.itemHeight) + 20
-        property int maxHeight: (selector.itemHeight * 5) + 20
-        property bool isOpen: false
-        options: dropBase.options
-        visible: selector.isOpen
-        height: drawerHeight <= selector.itemHeight * 5 ? drawerHeight : maxHeight
-        width: parent.width
+        property int drawerHeight: (dropBase.options.length * selectorList.itemHeight) + 20
+        property int maxHeight: (selectorList.itemHeight * 5) + 20
+        modal: true
+        dim: false
+        visible: false
         y: dropBase.height + 4
-        z: 100
-        anchors.horizontalCenter: parent.horizontalCenter
-        onSelectedOptionChanged: {
-            dropBase.selectedOption = selector.selectedOption;
-            selector.isOpen = false;
+        background: SelectionList {
+            id: selectorList
+            onHeightChanged: console.log(selector.drawerHeight)
+            height: selector.drawerHeight <= selectorList.itemHeight * 5 ? selector.drawerHeight : selector.maxHeight
+            width: dropBase.width
+            options: dropBase.options
+            onSelectedOptionChanged: {
+                dropBase.selectedOption = selectedOption;
+                selector.visible = false;
+            }
         }
     }
-    onClicked: selector.isOpen = !selector.isOpen;
 }

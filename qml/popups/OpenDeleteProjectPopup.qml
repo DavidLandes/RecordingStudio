@@ -21,6 +21,7 @@ BasePopup {
                 horizontalCenter: parent.horizontalCenter
                 margins: 20
             }
+            forceSelection: false
             options: projectNames
         }
         RowLayout {
