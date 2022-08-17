@@ -7,7 +7,8 @@ Rectangle {
     id: listBase
     property var options: []
     property var selectedOption
-    property string selectedColor: colors.get(Palette.Grey_25)
+    property string selectedColor: colors.get(Palette.Grey_30)
+    property string hoverColor: colors.get(Palette.Grey_25)
     property int itemHeight: 50
     color: colors.get(Palette.Grey_18)
     width: 200
@@ -24,8 +25,7 @@ Rectangle {
             radius: listBase.radius
             height: listBase.itemHeight
             width: parent.width
-            opacity: listItemMouse.containsMouse ? .6 : 1
-            color: selectedOption == modelData || listItemMouse.containsMouse ? selectedColor : "transparent"
+            color: (listItemMouse.containsMouse ? listBase.hoverColor : (selectedOption === modelData ? listBase.selectedColor : "transparent"))
             MediumText {
                 text: modelData
                 anchors.centerIn: parent
@@ -36,7 +36,14 @@ Rectangle {
                 id: listItemMouse
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: selectedOption = modelData;
+                onClicked: {
+                    if (selectedOption === modelData) {
+                        selectedOption = null;
+                    }
+                    else {
+                        selectedOption = modelData;
+                    }
+                }
             }
         }
     }

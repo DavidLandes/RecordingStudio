@@ -12,6 +12,7 @@ Rectangle {
     height: 48
     width: 256
     color: colors.get(Palette.Grey_25)
+    radius: 4
 
     TextEdit {
         id: edit

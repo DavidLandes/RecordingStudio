@@ -30,6 +30,9 @@ void Recorder::start(QString outputPath)
     if (m_selectedDevice != "" && QFile::exists(outputPath))
     {
         m_recorder->setOutputLocation(QUrl::fromLocalFile(outputPath));
+        QAudioEncoderSettings* settings = new QAudioEncoderSettings();
+        settings->setChannelCount(0);
+        m_recorder->setAudioSettings(*settings);
         m_recorder->record();
         qDebug() << "Recording Start:" << m_recorder->errorString();
     }

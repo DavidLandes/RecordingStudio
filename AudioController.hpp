@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QSettings>
+#include "AudioParser.hpp"
 #include "Globals.hpp"
 #include "Player.hpp"
 #include "Project.hpp"
@@ -35,6 +36,7 @@ signals:
     void startDelayChanged(int startDelay);
 
 private:
+    AudioParser* m_parser;
     Recorder* m_recorder;
     Project* m_currentProject;
     QVariantList m_startDelayOptions;

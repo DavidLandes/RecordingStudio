@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QUrl>
+#include "AudioParser.hpp"
 
 class Track : public QObject
 {
@@ -55,6 +56,8 @@ private:
     QString m_filePath;
     // The offset from the start of the audio.
     int m_offsetMs;
+    // Parses the audio file into usable data.
+    AudioParser* m_parser;
     // Plays media for this track.
     QMediaPlayer* m_media;
     // Specifies the audio output settings.

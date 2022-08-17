@@ -5,6 +5,7 @@ AudioController::AudioController(QObject *parent) : QObject(parent)
   , m_currentProject(nullptr)
   , m_startDelayOptions({ 0,1,2,3,4,5 })
 {
+    m_parser = new AudioParser();
     m_recorder = new Recorder();
     m_recorder->refreshDevices();
     m_startDelay = settings.value(QString(RECORDING_CONF) + "startDelay", 0).toInt();

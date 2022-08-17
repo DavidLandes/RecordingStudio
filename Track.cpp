@@ -8,6 +8,9 @@ Track::Track(QString filePath, QObject *parent) : QObject(parent)
   , m_duration(0)
   , m_elapsed(0)
 {
+    m_parser = new AudioParser();
+    m_parser->parseWav(m_filePath);
+
     m_audioOutput = new QAudioOutput();
 }
 
