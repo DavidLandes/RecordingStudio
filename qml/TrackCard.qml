@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import com.studio.Theme 1.0
-import com.studio.Track 1.0
+import com.studio.Audio 1.0
 import "buttons"
 import "common"
 
@@ -8,8 +8,6 @@ CardBase {
     id: channelBase
     property Track track
     readonly property bool isPlayingAudio: track ? track.isPlaying : false
-    readonly property var duration: track ? track.duration : 0
-    readonly property var elapsed: track ? track.elapsed : 0
     signal deleteClicked()
 
     width: parent.width
@@ -41,7 +39,7 @@ CardBase {
                 onClicked: {
                     isSelected = !isSelected;
                     if (isSelected) {
-                        audio.recorder.start(track.filePath);
+                        audio.recorder.start(track.source.filePath);
                     }
                     else {
                         audio.recorder.stop();

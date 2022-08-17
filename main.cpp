@@ -12,6 +12,7 @@
 #include "Recorder.hpp"
 #include "Theme.hpp"
 #include "Track.hpp"
+#include "WavFile.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +32,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Theme>("com.studio.Theme", 1, 0, "Theme", "Cannot create an instance of type \"Theme\"");
     qmlRegisterUncreatableType<AudioController>("com.studio.Audio", 1, 0, "AudioController", "Cannot create an instance of type \"AudioController\"");
     qmlRegisterUncreatableType<Recorder>("com.studio.Audio", 1, 0, "Recorder", "Cannot create an instance of type \"Recorder\"");
-    qmlRegisterUncreatableType<Track>("com.studio.Track", 1, 0, "Track", "Cannot create an instance of type \"Track\"");
+    qmlRegisterUncreatableType<WavFile>("com.studio.Audio", 1, 0, "WavFile", "Cannot create an instance of type \"WavFile\"");
+    qmlRegisterUncreatableType<Track>("com.studio.Audio", 1, 0, "Track", "Cannot create an instance of type \"Track\"");
 
     QQmlApplicationEngine engine;
 

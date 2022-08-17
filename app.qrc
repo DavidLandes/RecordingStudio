@@ -24,7 +24,7 @@
         <file>qml/text/MediumText.qml</file>
         <file>qml/text/SmallText.qml</file>
         <file>qml/AudioGraph.qml</file>
-        <file>qml/Channel.qml</file>
+        <file>qml/TrackCard.qml</file>
         <file>qml/Device.qml</file>
         <file>qml/Header.qml</file>
         <file>qml/main.qml</file>

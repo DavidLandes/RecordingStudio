@@ -15,7 +15,7 @@ Rectangle {
         }
         header: Item { height: 20; width: parent.width; }
         footer: Item { height: 20; width: parent.width; }
-        delegate: Channel {
+        delegate: TrackCard {
             track: modelData
             width: parent.width * .95
             anchors.horizontalCenter: parent.horizontalCenter

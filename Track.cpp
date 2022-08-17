@@ -1,24 +1,26 @@
 #include "Track.hpp"
 
 Track::Track(QString filePath, QObject *parent) : QObject(parent)
-  , m_filePath(filePath)
   , m_offsetMs(0)
   , m_media(nullptr)
   , m_isPlaying(false)
-  , m_duration(0)
   , m_elapsed(0)
 {
-    m_parser = new AudioParser();
-    m_parser->parseWav(m_filePath);
-
     m_audioOutput = new QAudioOutput();
+    m_source = new WavFile(filePath);
+}
+
+Track::~Track()
+{
+    delete m_audioOutput;
+    delete m_source;
 }
 
 void Track::play(int delaySec)
 {
-    if (QFile::exists(m_filePath))
+    if (QFile::exists(m_source->filePath()))
     {
-        resetMediaPlayer(m_filePath);
+        resetMediaPlayer(m_source->filePath());
         setIsPlaying(true);
 
         // Delay audio playback.
@@ -26,14 +28,13 @@ void Track::play(int delaySec)
             m_media->play();
             // Update isPlaying after we try to start the media player. This keeps state in sync if there's an error.
             setIsPlaying(m_media->state() == QMediaPlayer::State::PlayingState);
-            qDebug() << m_duration;
         });
     }
 }
 
 void Track::pause()
 {
-    if (QFile::exists(m_filePath))
+    if (QFile::exists(m_source->filePath()))
     {
         m_media->pause();
     }
@@ -41,24 +42,10 @@ void Track::pause()
 
 void Track::stop()
 {
-    if (QFile::exists(m_filePath))
+    if (QFile::exists(m_source->filePath()))
     {
         resetMediaPlayer();
         m_media->stop();
-    }
-}
-
-QString Track::filePath() const
-{
-    return m_filePath;
-}
-
-void Track::filePath(QString fileName)
-{
-    if (m_filePath != fileName)
-    {
-        m_filePath = fileName;
-        emit filePathChanged(m_filePath);
     }
 }
 
@@ -81,23 +68,9 @@ bool Track::isPlaying() const
     return m_isPlaying;
 }
 
-quint64 Track::duration() const
-{
-    return m_duration;
-}
-
 quint64 Track::elapsed() const
 {
     return m_elapsed;
-}
-
-void Track::setDuration(quint64 duration)
-{
-    if (m_duration == duration)
-        return;
-
-    m_duration = duration;
-    emit durationChanged(m_duration);
 }
 
 void Track::setElapsed(quint64 elapsed)
@@ -121,9 +94,10 @@ void Track::resetMediaPlayer(QString audioSource)
 
     m_media = new QMediaPlayer();
     m_media->setMedia(QUrl::fromLocalFile(audioSource));
+    // Re-parse the audio file metadata.
+    m_source->reload();
 
     // Listen for the media player changes.
-    connect(m_media, &QMediaPlayer::durationChanged, this, [=]() { setDuration(m_media->duration()); });
     connect(m_media, &QMediaPlayer::positionChanged, this, [=]() { setElapsed(m_media->position()); });
     connect(m_media, &QMediaPlayer::stateChanged, this, [=]()
     {
@@ -143,4 +117,17 @@ void Track::setIsPlaying(bool isPlaying)
 
     m_isPlaying = isPlaying;
     emit isPlayingChanged(m_isPlaying);
+}
+
+WavFile *Track::source() const
+{
+    return m_source;
+}
+
+void Track::setSource(WavFile *newSource)
+{
+    if (m_source == newSource)
+        return;
+    m_source = newSource;
+    emit sourceChanged();
 }

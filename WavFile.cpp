@@ -4,8 +4,15 @@ WavFile::WavFile(QString filePath, QObject *parent)
     : AudioParser{parent}
     , m_filePath(filePath)
 {
-    m_metaData = parseWav(filePath);
+    reload();
+}
+
+void WavFile::reload()
+{
+    m_metaData = parseWav(m_filePath);
     m_duration = m_metaData.dataSize / (double) m_metaData.byteRate;
+    emit metaDataChanged();
+    emit durationChanged();
 }
 
 double WavFile::duration() const

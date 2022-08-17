@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import com.studio.Theme 1.0
-import com.studio.Track 1.0
+import com.studio.Audio 1.0
 import "common"
 
 Rectangle {
@@ -8,7 +8,7 @@ Rectangle {
     radius: 8
     color: colors.get(Palette.Grey_17)
     Progress {
-        total: track ? track.duration : 0
+        total: track ? track.source.duration * 1000 : 0
         value: track ? track.elapsed : 0
         width: parent.width
         height: 4

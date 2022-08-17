@@ -25,8 +25,6 @@ WavHeader AudioParser::parseWav(QString filePath)
         wav.bitsPerSample = decode(bytes, 34, 2);
         wav.dataHeader    = decode(bytes, 36, 4, false);
         wav.dataSize      = decode(bytes, 40, 4);
-        qDebug() << wav.bitsPerSample << wav.blockAlign << wav.byteRate << wav.numOfChannels << wav.sampleRate;
-        qDebug() << (double)wav.dataSize / wav.byteRate << "seconds";
         return wav;
     }
     return {};

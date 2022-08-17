@@ -13,6 +13,8 @@ public:
 
     explicit WavFile(QString filePath, QObject *parent = nullptr);
 
+    void reload();
+
     const WavHeader &metaData() const;
     const QString &filePath() const;
     double duration() const;

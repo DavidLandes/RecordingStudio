@@ -12,7 +12,6 @@ Project::~Project()
     for (int i = m_tracks.length() - 1; i >= 0; i--)
     {
         Track* t = m_tracks.takeLast();
-        qDebug() << t;
         delete t;
     }
     disconnect(&m_fileWatcher, nullptr, nullptr, nullptr);
@@ -48,7 +47,7 @@ void Project::loadAudioTracks()
     for (QString fileName : getTrackNames())
     {
         m_tracks.append(new Track(m_audioDir.absoluteFilePath(fileName)));
-        m_fileWatcher.addPath(m_tracks.last()->filePath());
+        m_fileWatcher.addPath(m_tracks.last()->source()->filePath());
     }
     emit tracksChanged(m_tracks);
 }
@@ -76,7 +75,7 @@ void Project::createTrack()
             newFile.close();
             // Add the new track.
             m_tracks.append(new Track(newFilePath));
-            m_fileWatcher.addPath(m_tracks.last()->filePath());
+            m_fileWatcher.addPath(m_tracks.last()->source()->filePath());
             emit tracksChanged(m_tracks);
             return;
         }
@@ -89,10 +88,10 @@ void Project::deleteTrack(int index, bool deleteAudio)
     if (!m_tracks.isEmpty() && index >= 0 && index < m_tracks.length())
     {
         Track* t = m_tracks.takeAt(index);
-        m_fileWatcher.removePath(t->filePath());
+        m_fileWatcher.removePath(t->source()->filePath());
         if (deleteAudio)
         {
-            QFile::remove(t->filePath());
+            QFile::remove(t->source()->filePath());
         }
         delete t;
         emit tracksChanged(m_tracks);
@@ -131,7 +130,7 @@ void Project::onAudioFileChanged(QString filePath)
         for (Track* t : m_tracks)
         {
             // If the filePath still exists in the track list, this was deleted externally.. Reload the tracks.
-            if (filePath == t->filePath())
+            if (filePath == t->source()->filePath())
             {
                 qDebug() << "File deleted externally" << filePath;
                 loadAudioTracks();
