@@ -26,6 +26,7 @@ void Track::play(int delaySec)
             m_media->play();
             // Update isPlaying after we try to start the media player. This keeps state in sync if there's an error.
             setIsPlaying(m_media->state() == QMediaPlayer::State::PlayingState);
+            qDebug() << m_duration;
         });
     }
 }

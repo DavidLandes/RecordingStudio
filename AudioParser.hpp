@@ -8,7 +8,7 @@
 #include <stdint.h>
 
 #pragma pack(push, 1)
-struct WaveHeader
+struct WavHeader
 {
     uint32_t riff             : 32;
     uint32_t fileSize         : 32;
@@ -18,8 +18,8 @@ struct WaveHeader
     uint16_t formatType       : 16;
     uint16_t numOfChannels    : 16;
     uint32_t sampleRate       : 32;
-    uint32_t duration         : 32;
-    uint16_t calc2            : 16;
+    uint32_t byteRate         : 32;
+    uint16_t blockAlign       : 16;
     uint16_t bitsPerSample    : 16;
     uint32_t dataHeader       : 32;
     uint32_t dataSize         : 32;
@@ -32,7 +32,7 @@ class AudioParser : public QObject
 public:
     explicit AudioParser(QObject *parent = nullptr);
 
-    WaveHeader parseWav(QString filePath);
+    WavHeader parseWav(QString filePath);
 
 signals:
 
