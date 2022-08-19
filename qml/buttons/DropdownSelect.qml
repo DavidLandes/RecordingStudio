@@ -7,7 +7,7 @@ import "../common"
 BaseButton {
     id: dropBase
     property var options: []
-    property var selectedOption: options.length > 0 ? options[0] : undefined
+    property var selectedOption
     property string suffix: ""
     property alias forceSelection: selectorList.forceSelection
     height: 40
@@ -47,7 +47,7 @@ BaseButton {
         y: dropBase.height + 4
         background: SelectionList {
             id: selectorList
-            onHeightChanged: console.log(selector.drawerHeight)
+            Component.onCompleted: selectedOption = dropBase.selectedOption;
             height: selector.drawerHeight <= selectorList.itemHeight * 5 ? selector.drawerHeight : selector.maxHeight
             width: dropBase.width
             options: dropBase.options

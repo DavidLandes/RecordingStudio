@@ -8,6 +8,7 @@ Rectangle {
     radius: 8
     color: colors.get(Palette.Grey_17)
     Progress {
+        id: audioProgress
         total: track ? track.source.duration * 1000 : 0
         value: track ? track.elapsed : 0
         width: parent.width
