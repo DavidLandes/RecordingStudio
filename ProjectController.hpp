@@ -26,7 +26,6 @@ signals:
     void currentChanged(Project* current);
 
 private:
-    const QDir appDir = QDir(QDir::homePath() + "/Documents/RecordingStudio/");
     Project* m_current;
 };
 

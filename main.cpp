@@ -6,6 +6,7 @@
 #include "Application.hpp"
 #include "AudioDevice.hpp"
 #include "AudioController.hpp"
+#include "Globals.hpp"
 #include "Palette.hpp"
 #include "Player.hpp"
 #include "Project.hpp"

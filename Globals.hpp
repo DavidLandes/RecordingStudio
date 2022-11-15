@@ -1,6 +1,7 @@
 #pragma once
-#include <QSettings>
+#include "Settings.hpp"
 
-// Create app settings.
-#define RECORDING_CONF "Recording/"
-inline QSettings settings("studio.conf", QSettings::IniFormat);
+
+const QDir appDir = QDir(QDir::homePath() + "/Documents/RecordingStudio/");
+
+static Settings settings(appDir.absoluteFilePath("rec.conf"));

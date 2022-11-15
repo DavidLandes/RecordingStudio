@@ -6,9 +6,16 @@ Recorder::Recorder(QObject *parent) : QObject(parent)
 {
     refreshDevices();
     m_audioDevice = new AudioDevice();
-    for (QAudioDeviceInfo d : m_devices)
-        qDebug() << d.deviceName();
-    m_audioDevice->initialize(m_devices.first());
+    // Try to set the last device. Otherwise choose the first audio input option available.
+    QString lastDevice = settings.value(Settings::Config::MicrophoneName).toString();
+    if (lastDevice != "")
+    {
+        initializeAudioDevice(lastDevice);
+    }
+    else
+    {
+        m_audioDevice->initialize(m_devices.first());
+    }
 
     m_recorder = new QAudioRecorder();
     connect(m_recorder, &QAudioRecorder::stateChanged, [=]() { setState(convertState(m_recorder->state())); });

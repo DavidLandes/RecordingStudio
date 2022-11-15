@@ -34,7 +34,6 @@ Item {
             width: parent.width
             options: audio.recorder.deviceNames
             Component.onCompleted: selectedOption = audio.recorder.audioDevice.name;
-//            selectedOption: audio.recorder.audioDevice.name
             onSelectedOptionChanged: audio.recorder.initializeAudioDevice(selectedOption);
         }
         DropdownSelect {

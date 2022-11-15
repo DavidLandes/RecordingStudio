@@ -8,7 +8,7 @@ AudioController::AudioController(QObject *parent) : QObject(parent)
     m_parser = new AudioParser();
     m_recorder = new Recorder();
     m_recorder->refreshDevices();
-    m_startDelay = settings.value(QString(RECORDING_CONF) + "startDelay", 0).toInt();
+    m_startDelay = settings.value(Settings::Config::RecordDelay).toInt();
 }
 
 AudioController::~AudioController()
@@ -50,7 +50,7 @@ void AudioController::setStartDelay(int startDelay)
 {
     if (m_startDelay != startDelay)
     {
-        settings.setValue(QString(RECORDING_CONF) + "startDelay", startDelay);
+        settings.setValue(Settings::Config::RecordDelay, startDelay);
         m_startDelay = startDelay;
         emit startDelayChanged(m_startDelay);
     }

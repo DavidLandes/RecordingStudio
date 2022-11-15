@@ -4,6 +4,7 @@
 #include <QAudioDeviceInfo>
 #include <QAudioInput>
 #include <QDebug>
+#include "Globals.hpp"
 
 class AudioDevice : public QObject
 {

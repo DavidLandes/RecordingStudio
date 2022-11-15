@@ -1,6 +1,5 @@
 #pragma once
 #include <QObject>
-#include <QSettings>
 #include "AudioParser.hpp"
 #include "Globals.hpp"
 #include "Player.hpp"

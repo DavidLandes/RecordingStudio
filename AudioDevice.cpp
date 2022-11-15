@@ -9,7 +9,6 @@ AudioDevice::AudioDevice(QObject *parent)
 
 void AudioDevice::initialize(QAudioDeviceInfo info)
 {
-
     qDebug() << "AudioDevice::initialize() -" << info.deviceName();
     QAudioFormat format;
     format.setSampleRate(8000);
@@ -28,8 +27,7 @@ void AudioDevice::initialize(QAudioDeviceInfo info)
 
     setAudioInput(new QAudioInput(format));
     setInfo(info);
-    m_name = info.deviceName();
-    emit nameChanged();
+    setName(info.deviceName());
 }
 
 bool AudioDevice::isReady()
@@ -75,6 +73,7 @@ void AudioDevice::setName(QString microphoneName)
     if (m_name != microphoneName)
     {
         m_name = microphoneName;
+        settings.setValue(Settings::Config::MicrophoneName, microphoneName);
         emit nameChanged();
     }
 }
