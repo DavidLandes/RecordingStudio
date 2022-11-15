@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 import "../text"
 import "../buttons"
 
@@ -31,9 +32,10 @@ Item {
         DropdownSelect {
             height: 50
             width: parent.width
-            options: audio.recorder.devices
-            selectedOption: audio.recorder.selectedDevice
-            onSelectedOptionChanged: audio.recorder.selectedDevice = selectedOption;
+            options: audio.recorder.deviceNames
+            Component.onCompleted: selectedOption = audio.recorder.audioDevice.name;
+//            selectedOption: audio.recorder.audioDevice.name
+            onSelectedOptionChanged: audio.recorder.initializeAudioDevice(selectedOption);
         }
         DropdownSelect {
             height: 50

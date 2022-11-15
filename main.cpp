@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "Application.hpp"
+#include "AudioDevice.hpp"
 #include "AudioController.hpp"
 #include "Palette.hpp"
 #include "Player.hpp"
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Recorder>("com.studio.Audio", 1, 0, "Recorder", "Cannot create an instance of type \"Recorder\"");
     qmlRegisterUncreatableType<WavFile>("com.studio.Audio", 1, 0, "WavFile", "Cannot create an instance of type \"WavFile\"");
     qmlRegisterUncreatableType<Track>("com.studio.Audio", 1, 0, "Track", "Cannot create an instance of type \"Track\"");
+    qmlRegisterUncreatableType<AudioDevice>("com.studio.Audio", 1, 0, "AudioDevice", "Cannot create an instance of type \"AudioDevice\"");
 
     QQmlApplicationEngine engine;
 

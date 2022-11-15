@@ -39,7 +39,7 @@ CardBase {
                 onClicked: {
                     isSelected = !isSelected;
                     if (isSelected) {
-                        audio.recorder.start(track.source.filePath);
+                        audio.recorder.start(track);
                     }
                     else {
                         audio.recorder.stop();

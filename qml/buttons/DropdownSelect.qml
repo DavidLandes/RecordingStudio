@@ -10,6 +10,7 @@ BaseButton {
     property var selectedOption
     property string suffix: ""
     property alias forceSelection: selectorList.forceSelection
+
     height: 40
     width: 88
     radius: 8
@@ -17,7 +18,7 @@ BaseButton {
     color: colors.get(Palette.Grey_25)
     onClicked: selector.visible = !selector.visible;
     MediumText {
-        text: (dropBase.selectedOption ?? "") + (dropBase.selectedOption !== undefined ? " " : "") + dropBase.suffix
+        text: (dropBase.selectedOption ?? "") + (dropBase.suffix ? (" " + dropBase.suffix) : "")
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideRight

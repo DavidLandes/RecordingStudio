@@ -17,6 +17,7 @@ public:
     Q_PROPERTY(int offsetMs READ offsetMs WRITE setOffsetMs NOTIFY offsetMsChanged)
     Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
     Q_PROPERTY(quint64 elapsed READ elapsed WRITE setElapsed NOTIFY elapsedChanged)
+    Q_PROPERTY(QList<float> volumeSamples READ volumeSamples WRITE setVolumeSamples NOTIFY volumeSamplesChanged)
     explicit Track(QString filePath, QObject *parent = nullptr);
     ~Track();
 
@@ -32,9 +33,12 @@ public:
     // Get/set the elapsed time of the playback.
     quint64 elapsed() const;
     void setElapsed(quint64 elapsed);
-
+    // Get/set the audio source for the track.
     WavFile *source() const;
     void setSource(WavFile *newSource);
+    // Get/set the list of volume samples for the track.
+    QList<float> volumeSamples() const;
+    void setVolumeSamples(QList<float> newVolumeSamples);
 
 signals:
     // Property changed signals.
@@ -43,6 +47,7 @@ signals:
     void isPlayingChanged(bool isPlaying);
     void elapsedChanged(quint64 elapsed);
     void sourceChanged();
+    void volumeSamplesChanged();
 
 private:
     // QMediaPlayer keeps the source filestream open.. This resets the media player.
@@ -59,6 +64,9 @@ private:
     bool m_isPlaying;
     // The elapsed time of the playback.
     quint64 m_elapsed;
+    // The audio source for this track.
     WavFile* m_source;
+    // List of volume samples for this track.
+    QList<float> m_volumeSamples;
 };
 

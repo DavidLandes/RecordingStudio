@@ -28,7 +28,7 @@ Rectangle {
             width: parent.width
             color: (listItemMouse.containsMouse ? listBase.hoverColor : (selectedOption === modelData ? listBase.selectedColor : "transparent"))
             MediumText {
-                text: modelData
+                text: modelData ? modelData : ""
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
