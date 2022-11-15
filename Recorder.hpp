@@ -15,6 +15,7 @@ class Recorder : public QObject
     Q_OBJECT
 public:
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
+    Q_PROPERTY(AudioData* outputData READ outputData WRITE setOutputData NOTIFY outputDataChanged)
     Q_PROPERTY(AudioDevice* audioDevice READ audioDevice WRITE setAudioDevice NOTIFY audioDeviceChanged)
     Q_PROPERTY(bool isRecording READ isRecording NOTIFY stateChanged)
 
@@ -29,20 +30,21 @@ public:
     };
     Q_ENUM(State)
 
-    Q_INVOKABLE void start(Track* track);
+    Q_INVOKABLE void start();
     Q_INVOKABLE void stop();
 
     State state() const;    
     bool isRecording() const;
     AudioDevice *audioDevice() const;
     void setAudioDevice(AudioDevice *newAudioDevice);
+    // Get/set the audio data from the last recording.
+    AudioData *outputData() const;
+    void setOutputData(AudioData *newOutputData);
 
 signals:
     void stateChanged(State state);
-    void audioDeviceChanged();
-
-public slots:
-    void onRecordingVolumeChanged(qreal volume);
+    void audioDeviceChanged();    
+    void outputDataChanged();
 
 private:
     State convertState(QAudioRecorder::State state);
@@ -50,9 +52,8 @@ private:
 
     QAudioRecorder* m_recorder;
     State m_state;
-    Track* m_currentRecordingTrack;
-    QTimer* m_sampleTimer;
     QIODevice* m_recordingDevice;
     AudioDevice *m_audioDevice;
+    AudioData *m_outputData;
 };
 

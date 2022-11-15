@@ -6,6 +6,7 @@ Track::Track(QString filePath, QObject *parent) : QObject(parent)
   , m_isPlaying(false)
   , m_elapsed(0)
   , m_volumeSamples({})
+  , m_data(nullptr)
 {
     m_audioOutput = new QAudioOutput();
     m_source = new WavFile(filePath);
@@ -15,6 +16,7 @@ Track::~Track()
 {
     delete m_audioOutput;
     delete m_source;
+    delete m_data;
 }
 
 void Track::play(int delaySec)
@@ -144,4 +146,18 @@ void Track::setVolumeSamples(QList<float> newVolumeSamples)
         return;
     m_volumeSamples = newVolumeSamples;
     emit volumeSamplesChanged();
+}
+
+AudioData* Track::data() const
+{
+    return m_data;
+}
+
+void Track::setData(AudioData* newData)
+{
+    if (m_data != newData)
+    {
+        m_data = newData;
+        emit dataChanged();
+    }
 }

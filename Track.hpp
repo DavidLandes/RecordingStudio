@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QUrl>
+#include "AudioData.hpp"
 #include "AudioParser.hpp"
 #include "WavFile.hpp"
 
@@ -14,6 +15,7 @@ class Track : public QObject
     Q_OBJECT
 public:
     Q_PROPERTY(WavFile* source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(AudioData* data READ data WRITE setData NOTIFY dataChanged)
     Q_PROPERTY(int offsetMs READ offsetMs WRITE setOffsetMs NOTIFY offsetMsChanged)
     Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
     Q_PROPERTY(quint64 elapsed READ elapsed WRITE setElapsed NOTIFY elapsedChanged)
@@ -39,6 +41,9 @@ public:
     // Get/set the list of volume samples for the track.
     QList<float> volumeSamples() const;
     void setVolumeSamples(QList<float> newVolumeSamples);
+    // Get/set the audio binary
+    AudioData* data() const;
+    void setData(AudioData* newData);
 
 signals:
     // Property changed signals.
@@ -47,7 +52,8 @@ signals:
     void isPlayingChanged(bool isPlaying);
     void elapsedChanged(quint64 elapsed);
     void sourceChanged();
-    void volumeSamplesChanged();
+    void volumeSamplesChanged();    
+    void dataChanged();
 
 private:
     // QMediaPlayer keeps the source filestream open.. This resets the media player.
@@ -68,5 +74,6 @@ private:
     WavFile* m_source;
     // List of volume samples for this track.
     QList<float> m_volumeSamples;
+    AudioData* m_data;
 };
 

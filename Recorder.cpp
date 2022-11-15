@@ -1,42 +1,31 @@
 #include "Recorder.hpp"
 
 Recorder::Recorder(QObject *parent) : QObject(parent)
-  , m_currentRecordingTrack(nullptr)
 {
     m_audioDevice = new AudioDevice();
-
+    m_outputData = new AudioData();
     m_recorder = new QAudioRecorder();
     connect(m_recorder, &QAudioRecorder::stateChanged, [=]() { setState(convertState(m_recorder->state())); });
-
-    // Setup timer to collect recording samples.
-    m_sampleTimer = new QTimer();
-    m_sampleTimer->setInterval(250);
-    connect(m_sampleTimer, &QTimer::timeout, [=]() { onRecordingVolumeChanged(m_recorder->volume()); });
 }
 
 Recorder::~Recorder()
 {
     delete m_recorder;
+    delete m_outputData;
     delete m_audioDevice;
 }
 
-void Recorder::start(Track* track)
+void Recorder::start()
 {
-    if (m_audioDevice->isReady() && QFile::exists(track->source()->filePath()))
+    if (m_audioDevice->isReady())
     {
-        m_currentRecordingTrack = track;
-
         // Start recording.
         m_recordingDevice = m_audioDevice->audioInput()->start();
-
-        // Track recording volume.
-        m_currentRecordingTrack->setVolumeSamples({});
-        m_sampleTimer->start();
         qDebug() << "Recording Start:" << m_recorder->errorString();
     }
     else
     {
-        qDebug() << "Cannot start recording for file:" << track->source()->filePath();
+        qDebug() << "Cannot start recording";
     }
 }
 
@@ -45,13 +34,10 @@ void Recorder::stop()
     if (m_audioDevice->isReady())
     {
         // Save bytes to the output file.
-        QFile output(m_currentRecordingTrack->source()->filePath());
-        output.open(QIODevice::WriteOnly);
-        output.write(m_recordingDevice->readAll());
-
-        m_sampleTimer->stop();
-        m_currentRecordingTrack = nullptr;
-        qDebug() << "Recording Stop:";
+        //TODO: David - We save the recording output into this variable now. All we need to do is create a formatted audio file and insert this data.
+        //                Once the file is created, we can attach it to a track & play it.
+        m_outputData->setHex(m_recordingDevice->readAll());
+        qDebug() << "Recording Stop:" << m_outputData->hex();
     }
     else
     {
@@ -67,16 +53,6 @@ Recorder::State Recorder::state() const
 bool Recorder::isRecording() const
 {
     return m_state == Recorder::State::Recording;
-}
-
-void Recorder::onRecordingVolumeChanged(qreal volume)
-{
-    if (m_currentRecordingTrack && isRecording())
-    {
-        QList<float> samples = m_currentRecordingTrack->volumeSamples();
-        samples.append(1);
-        m_currentRecordingTrack->setVolumeSamples(samples);
-    }
 }
 
 Recorder::State Recorder::convertState(QMediaRecorder::State state)
@@ -114,5 +90,19 @@ void Recorder::setAudioDevice(AudioDevice *newAudioDevice)
     {
         m_audioDevice = newAudioDevice;
         emit audioDeviceChanged();
+    }
+}
+
+AudioData *Recorder::outputData() const
+{
+    return m_outputData;
+}
+
+void Recorder::setOutputData(AudioData *newOutputData)
+{
+    if (m_outputData != newOutputData)
+    {
+        m_outputData = newOutputData;
+        emit outputDataChanged();
     }
 }
