@@ -1,21 +1,9 @@
 #include "Recorder.hpp"
 
 Recorder::Recorder(QObject *parent) : QObject(parent)
-  , m_devices({})
   , m_currentRecordingTrack(nullptr)
 {
-    refreshDevices();
     m_audioDevice = new AudioDevice();
-    // Try to set the last device. Otherwise choose the first audio input option available.
-    QString lastDevice = settings.value(Settings::Config::MicrophoneName).toString();
-    if (lastDevice != "")
-    {
-        initializeAudioDevice(lastDevice);
-    }
-    else
-    {
-        m_audioDevice->initialize(m_devices.first());
-    }
 
     m_recorder = new QAudioRecorder();
     connect(m_recorder, &QAudioRecorder::stateChanged, [=]() { setState(convertState(m_recorder->state())); });
@@ -30,25 +18,6 @@ Recorder::~Recorder()
 {
     delete m_recorder;
     delete m_audioDevice;
-}
-
-void Recorder::initializeAudioDevice(QString name)
-{
-    for (QAudioDeviceInfo dev : m_devices)
-    {
-        if (dev.deviceName() == name)
-        {
-            m_audioDevice->initialize(dev);
-            return;
-        }
-    }
-    qDebug() << "Device" << name << "invalid, cannot initialize";
-}
-
-void Recorder::refreshDevices()
-{
-    m_devices.clear();
-    setDevices(QAudioDeviceInfo::availableDevices(QAudio::AudioInput));
 }
 
 void Recorder::start(Track* track)
@@ -87,21 +56,6 @@ void Recorder::stop()
     else
     {
         qDebug() << "Cannot stop recording. Device is not ready:" << m_audioDevice;
-    }
-}
-
-QList<QAudioDeviceInfo> Recorder::devices() const
-{
-    return m_devices;
-}
-
-void Recorder::setDevices(QList<QAudioDeviceInfo> inputs)
-{
-    if (m_devices != inputs)
-    {
-        m_devices = inputs;
-        emit devicesChanged(inputs);
-        emit deviceNamesChanged();
     }
 }
 
@@ -147,16 +101,6 @@ void Recorder::setState(Recorder::State state)
         m_state = state;
         emit stateChanged(m_state);
     }
-}
-
-QStringList Recorder::deviceNames() const
-{
-    QStringList names = {};
-    for (QAudioDeviceInfo device : m_devices)
-    {
-        names.append(device.deviceName());
-    }
-    return names;
 }
 
 AudioDevice *Recorder::audioDevice() const

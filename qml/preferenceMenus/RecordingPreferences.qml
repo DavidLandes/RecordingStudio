@@ -32,9 +32,9 @@ Item {
         DropdownSelect {
             height: 50
             width: parent.width
-            options: audio.recorder.deviceNames
-            Component.onCompleted: selectedOption = audio.recorder.audioDevice.name;
-            onSelectedOptionChanged: audio.recorder.initializeAudioDevice(selectedOption);
+            options: audio.deviceNames
+            Component.onCompleted: selectedOption = audio.currentAudioDevice().name;
+            onSelectedOptionChanged: audio.initializeAudioDevice(selectedOption);
         }
         DropdownSelect {
             height: 50
