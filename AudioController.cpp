@@ -8,6 +8,9 @@ AudioController::AudioController(QObject *parent) : QObject(parent)
 {
     m_parser = new AudioParser();
     m_recorder = new Recorder();
+    connect(m_recorder, &Recorder::recordingStopped, [=]() {
+        m_parser->createWav(m_recorder->audioDevice()->input()->format(), m_recorder->outputData());
+    });
     refreshDevices();
     // Try to set the last device. Otherwise choose the first audio input option available.
     QString lastDevice = settings.value(Settings::Config::MicrophoneName).toString();
@@ -107,6 +110,7 @@ void AudioController::initializeAudioDevice(QString name)
     {
         if (dev.deviceName() == name)
         {
+            // Audio input device is initialized. Make sure the recorder knows when audio data is received.
             m_recorder->audioDevice()->initialize(dev);
             return;
         }

@@ -1,6 +1,9 @@
 #pragma once
 
+#include <QAudioFormat>
+#include <QDataStream>
 #include <QDebug>
+#include <QDir>
 #include <QObject>
 #include <QFile>
 #include <QtEndian>
@@ -33,11 +36,13 @@ public:
     explicit AudioParser(QObject *parent = nullptr);
 
     WavHeader parseWav(QString filePath);
+    QByteArray createWav(QAudioFormat format, QByteArray data);
 
 signals:
 
 private:
     quint64 decode(QByteArray bytes, int start, int length, bool isLittleEndian=true);
+//    void encode(char* data, uint32_t newData, );
     bool inRange(int value, int min, int max);
 };
 

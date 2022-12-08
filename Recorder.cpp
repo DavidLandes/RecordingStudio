@@ -3,25 +3,43 @@
 Recorder::Recorder(QObject *parent) : QObject(parent)
 {
     m_audioDevice = new AudioDevice();
-    m_outputData = new AudioData();
+    m_outputData = QByteArray();
     m_recorder = new QAudioRecorder();
+    m_inputBuffer = new QBuffer();
     connect(m_recorder, &QAudioRecorder::stateChanged, [=]() { setState(convertState(m_recorder->state())); });
+    connect(this, &Recorder::outputDataChanged, [=]() { qDebug() << "output data:" << m_outputData.length(); });
 }
 
 Recorder::~Recorder()
 {
     delete m_recorder;
-    delete m_outputData;
     delete m_audioDevice;
+    delete m_inputBuffer;
 }
 
 void Recorder::start()
 {
+    // Starting a new recording.. Clear out any outputData.
+    setOutputData(QByteArray());
+    resume();
+}
+
+void Recorder::resume()
+{
     if (m_audioDevice->isReady())
     {
         // Start recording.
-        m_recordingDevice = m_audioDevice->audioInput()->start();
-        qDebug() << "Recording Start:" << m_recorder->errorString();
+        m_inputBuffer->close();
+        if (m_inputBuffer->open(QIODevice::WriteOnly))
+        {
+            m_audioDevice->input()->start(m_inputBuffer);
+            qDebug() << "Recording Start:" << m_recorder->errorString();
+            emit recordingStarted();
+        }
+        else
+        {
+            qDebug() << "Cannot record. Input buffer not open";
+        }
     }
     else
     {
@@ -33,15 +51,33 @@ void Recorder::stop()
 {
     if (m_audioDevice->isReady())
     {
-        // Save bytes to the output file.
-        //TODO: David - We save the recording output into this variable now. All we need to do is create a formatted audio file and insert this data.
-        //                Once the file is created, we can attach it to a track & play it.
-        m_outputData->setHex(m_recordingDevice->readAll());
-        qDebug() << "Recording Stop:" << m_outputData->hex();
+        qDebug() << "Recording Stop";
+        m_audioDevice->input()->suspend();
+        // Wait for data to finish writing to the buffer before processing it.
+        QTimer::singleShot(250, [=]() {
+            m_inputBuffer->close();
+            processAudioInput();
+            emit recordingStopped();
+        });
     }
     else
     {
         qDebug() << "Cannot stop recording. Device is not ready:" << m_audioDevice;
+    }
+}
+
+void Recorder::processAudioInput()
+{
+    // Append new data to our buffer.
+    if (m_inputBuffer->open(QIODevice::ReadOnly))
+    {
+        m_outputData += m_inputBuffer->readAll();
+        m_inputBuffer->close();
+        emit outputDataChanged();
+    }
+    else
+    {
+        qDebug() << "Error: could not process audio buffer.";
     }
 }
 
@@ -93,12 +129,12 @@ void Recorder::setAudioDevice(AudioDevice *newAudioDevice)
     }
 }
 
-AudioData *Recorder::outputData() const
+QByteArray Recorder::outputData() const
 {
     return m_outputData;
 }
 
-void Recorder::setOutputData(AudioData *newOutputData)
+void Recorder::setOutputData(QByteArray newOutputData)
 {
     if (m_outputData != newOutputData)
     {

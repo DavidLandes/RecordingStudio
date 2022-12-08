@@ -16,7 +16,6 @@ Track::~Track()
 {
     delete m_audioOutput;
     delete m_source;
-    delete m_data;
 }
 
 void Track::play(int delaySec)
@@ -148,12 +147,12 @@ void Track::setVolumeSamples(QList<float> newVolumeSamples)
     emit volumeSamplesChanged();
 }
 
-AudioData* Track::data() const
+QByteArray Track::data() const
 {
     return m_data;
 }
 
-void Track::setData(AudioData* newData)
+void Track::setData(QByteArray newData)
 {
     if (m_data != newData)
     {

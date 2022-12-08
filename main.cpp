@@ -4,7 +4,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "Application.hpp"
-#include "AudioData.hpp"
 #include "AudioDevice.hpp"
 #include "AudioController.hpp"
 #include "Globals.hpp"

@@ -3,36 +3,39 @@
 AudioDevice::AudioDevice(QObject *parent)
     : QObject{parent}
     , m_info()
-    , m_audioInput(nullptr)
+    , m_input(nullptr)
 {
+    // Default audio format
+    QAudioFormat format;
+    format.setSampleRate(11025);
+    format.setChannelCount(1);
+    format.setSampleSize(8);
+    format.setCodec("audio/pcm");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::SignedInt);
+    setFormat(format);
 }
 
 void AudioDevice::initialize(QAudioDeviceInfo info)
 {
     qDebug() << "AudioDevice::initialize() -" << info.deviceName();
-    QAudioFormat format;
-    format.setSampleRate(8000);
-    format.setChannelCount(1);
-    format.setSampleSize(8);
-    format.setCodec("audio/pcm");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::UnSignedInt);
 
-    if (!info.isFormatSupported(format)) {
+    if (!info.isFormatSupported(m_format)) {
         qWarning() << "Default format not supported, trying to use the nearest.";
-        format = info.nearestFormat(format);
+        info.nearestFormat(m_format);
     }
-    if (m_audioInput != nullptr)
-        delete m_audioInput;
 
-    setAudioInput(new QAudioInput(format));
+    // Set the audio input. Notify when we should read audio data.
+    QAudioInput* newInput = new QAudioInput(m_format);
+    newInput->setNotifyInterval(100);
+    setInput(newInput);
     setInfo(info);
     setName(info.deviceName());
 }
 
 bool AudioDevice::isReady()
 {
-    return m_audioInput != nullptr && m_info.deviceName() != "";
+    return m_input != nullptr && m_info.deviceName() != "";
 }
 
 QAudioDeviceInfo AudioDevice::info() const
@@ -49,23 +52,45 @@ void AudioDevice::setInfo(QAudioDeviceInfo newInfo)
     }
 }
 
-QAudioInput* AudioDevice::audioInput() const
+QAudioInput* AudioDevice::input() const
 {
-    return m_audioInput;
+    return m_input;
 }
 
-void AudioDevice::setAudioInput(QAudioInput* newAudioInput)
+void AudioDevice::setInput(QAudioInput* newInput)
 {
-    if (m_audioInput != newAudioInput)
+    if (newInput != nullptr)
     {
-        m_audioInput = newAudioInput;
-        emit audioInputChanged();
+        if (m_input != nullptr)
+        {
+            delete m_input;
+        }
+        m_input = newInput;
+        emit inputChanged();
+    }
+    else
+    {
+        qDebug() << "Warning: Tried to set AudioInput to nullptr";
     }
 }
 
 QString AudioDevice::name() const
 {
     return m_name;
+}
+
+QAudioFormat AudioDevice::format() const
+{
+    return m_format;
+}
+
+void AudioDevice::setFormat(QAudioFormat format)
+{
+    if (m_format != format)
+    {
+        m_format = format;
+        emit formatChanged();
+    }
 }
 
 void AudioDevice::setName(QString microphoneName)

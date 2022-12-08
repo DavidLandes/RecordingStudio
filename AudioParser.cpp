@@ -30,6 +30,30 @@ WavHeader AudioParser::parseWav(QString filePath)
     return {};
 }
 
+QByteArray AudioParser::createWav(QAudioFormat format, QByteArray data)
+{
+    qDebug() << "Creating wav file" << data.length();
+    QByteArray audioFile;
+    WavHeader header = {};
+    header.riff          = 0x46464952;  // RIFF
+    header.fileSize      = (uint32_t)data.length() + sizeof(WavHeader);   // Data length plus 44 bytes for this header.
+    header.headerType    = 0x45564157;  // WAVE
+    header.formatMarker  = 0x20746d66;  // fmt
+    header.formatLen     = 16; // length of format section above in bytes.
+    header.formatType    = (uint16_t)0x1;    // PCM
+    header.numOfChannels = (uint16_t)format.channelCount();
+    header.sampleRate    = (uint32_t)format.sampleRate();
+    header.byteRate      = (uint32_t)(format.sampleRate() * format.sampleSize() * format.channelCount()) / 8;
+    header.blockAlign    = (uint16_t)(format.sampleSize() * format.channelCount() / 8);
+    header.bitsPerSample = format.sampleSize() * format.channelCount();
+    header.dataHeader    = 0x61746164;  // data
+    header.dataSize      = (uint32_t)data.length();
+
+    audioFile.append(QByteArray::fromRawData((char*)&header, sizeof(WavHeader)));
+    audioFile.append(data);
+    return audioFile;
+}
+
 quint64 AudioParser::decode(QByteArray bytes, int startByte, int length, bool littleEndian)
 {
     quint64 joined = 0;
